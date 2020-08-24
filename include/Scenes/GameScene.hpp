@@ -1,6 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+
+#include "Resources/TileSet.hpp"
+
+#include "World/MapGenerator.hpp"
+
+#include "Entities/Player.hpp"
 
 class GameScene {
     public:
@@ -12,4 +19,17 @@ class GameScene {
 
     private:
         sf::RenderWindow &window;
+
+        int cursor_tile;
+        sf::Vector2f cursor_pos;
+        bool dragging;
+        sf::Vector2f drag_pos;
+
+        TileSet *tileset;
+        Map *map;
+
+        sf::View world_view;
+        sf::View ui_view;
+
+        std::vector<Entity *> entity_vec;
 };

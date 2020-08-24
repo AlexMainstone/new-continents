@@ -3,7 +3,11 @@
 
 int main() {
     // Create Window
-    sf::RenderWindow window(sf::VideoMode(1280, 720), "base-builder");
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "Settlex");
+
+    sf::Image icon;
+    icon.loadFromFile("../res/icon.png");
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
     GameScene *scene = new GameScene(window);
 
@@ -22,7 +26,7 @@ int main() {
         scene->update(deltaclock.restart().asSeconds());
 
         // Render
-        window.clear();
+        window.clear(sf::Color(71, 45, 60));
 
         // Draw
         scene->render();
