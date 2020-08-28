@@ -3,7 +3,7 @@
 
 int main() {
     // Create Window
-    sf::RenderWindow window(sf::VideoMode(1280, 720), "Settlex");
+    sf::RenderWindow window(sf::VideoMode(1280, 720), "New Continent");
 
     sf::Image icon;
     icon.loadFromFile("../res/icon.png");

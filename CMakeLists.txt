@@ -17,6 +17,16 @@ set(SOURCES
 
     src/Entities/Entity.cpp
     src/Entities/Player.cpp
+
+    src/Objects/Object.cpp
+
+    src/Interface/GameInterface.cpp
+    src/Interface/BuildMenu.cpp
+    src/Interface/ActionMenu.cpp
+    src/Interface/Button.cpp
+    src/Interface/WordButton.cpp
+    src/Interface/IconButton.cpp
+    src/Interface/Text.cpp
     )
 
 find_package(SFML 2.5 REQUIRED audio graphics window system)

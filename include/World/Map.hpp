@@ -14,6 +14,11 @@ class Map : public sf::Drawable {
         void updateChunks();
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+
+        void addObject(Object *object);
+        sf::Vector2i tileToChunkPos(int x, int y);
+
+        Object *getObject(int x, int y);
     private:
         TileSet *tileset;
         int map_width, map_height;

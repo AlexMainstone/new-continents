@@ -13,8 +13,11 @@ TileSet::TileSet(const char *path, int tilesize) {
 
     addTile(new Tile(0, sf::Color::White, false));
     addTile(new Tile(5, sf::Color(56, 217, 115), false));
+    addTile(new Tile(6, sf::Color(76, 217, 135), false));
+    addTile(new Tile(7, sf::Color(16, 177, 75), false));
     addTile(new Tile(1, sf::Color(122, 68, 74), false));
     addTile(new Tile(48, sf::Color(50, 125, 50), true));
+    addTile(new Tile(248, sf::Color(50, 50, 217), true));
 }
 
 int TileSet::getTileSize() {

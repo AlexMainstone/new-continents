@@ -24,12 +24,28 @@ void Chunk::updateTexture(TileSet *tileset) {
     sprite.setTexture(render_texture.getTexture());
 }
 
-#include<iostream>
 void Chunk::setTile(int x, int y, Tile *tile) {
     chunk_data[x][y] = tile;
 }
 
-void Chunk::drawChunk(sf::RenderTarget &target, sf::Vector2f pos) {
+void Chunk::addObject(Object *obj) {
+    object_list.push_back(obj);
+}
+
+Object *Chunk::getObject(int x, int y) {
+    for(auto o : object_list) {
+        if(o->getPos().x == x && o->getPos().y == y) {
+            return o;
+        }
+    }
+    return nullptr;
+}
+
+void Chunk::drawChunk(sf::RenderTarget &target, TileSet *tileset, sf::Vector2f pos) {
     sprite.setPosition(pos);
     target.draw(sprite);
+
+    for(auto o : object_list) {
+        tileset->drawSprite(target, sf::Vector2f(o->getPos().x * tileset->getTileSize() + pos.x, o->getPos().y * tileset->getTileSize() + pos.y), o->getTile()->tile, o->getTile()->color);
+    }
 }
