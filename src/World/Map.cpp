@@ -38,11 +38,18 @@ void Map::setTile(int x, int y, Tile *tile, bool update) {
     }
 }
 
+Tile *Map::getTile(int x, int y) {
+    int chunk_xpos = x % CHUNK_WIDTH;
+    int chunk_ypos = y % CHUNK_HEIGHT;
+    sf::Vector2i chunkpos = tileToChunkPos(x, y);
+
+    return map_data[chunkpos.x][chunkpos.y]->getTile(chunk_xpos, chunk_ypos);
+}
+
 void Map::addObject(Object *object) {
     int chunk_xpos = object->getPos().x % CHUNK_WIDTH;
     int chunk_ypos = object->getPos().y % CHUNK_HEIGHT;
     sf::Vector2i chunkpos = tileToChunkPos(object->getPos().x, object->getPos().y);
-    object->setPos(chunk_xpos, chunk_ypos);
     map_data[chunkpos.x][chunkpos.y]->addObject(object);
 }
 
@@ -50,7 +57,7 @@ Object *Map::getObject(int x, int y) {
     int chunk_xpos = x % CHUNK_WIDTH;
     int chunk_ypos = y % CHUNK_HEIGHT;
     sf::Vector2i chunkpos = tileToChunkPos(x, y);
-    return map_data[chunkpos.x][chunkpos.y]->getObject(chunk_xpos, chunk_ypos);
+    return map_data[chunkpos.x][chunkpos.y]->getObject(x, y);
 }
 
 void Map::updateChunks() {

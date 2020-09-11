@@ -4,6 +4,7 @@
 #include <queue>
 
 #include "Resources/TileSet.hpp"
+#include "Maths/Pathfinding.hpp"
 
 class Entity {
     public:
@@ -11,8 +12,11 @@ class Entity {
         virtual void update(float dt);
         virtual void draw(sf::RenderTarget &target, TileSet *tileset);
         
+        void moveTo(int x, int y, Map *map);
         void move(int x, int y);
         void move(sf::Vector2i movedir);
+
+        bool isMoving();
     private:
         sf::Vector2f pos;
         int tile;

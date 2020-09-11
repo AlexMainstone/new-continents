@@ -1,10 +1,16 @@
 #include "Scenes/GameScene.hpp"
 
+#include<iostream>
 GameScene::GameScene(sf::RenderWindow &window) : window(window) {
-    tileset = new TileSet("../res/tileset.png", 16);
+    tileset = new TileSet("../res/tilesets/tileset.png", 16);
     MapGenerator gen;
-    map = gen.generate(tileset);
+    // map = gen.generate(tileset);
+    map = gen.generate_from_py(tileset);
+    cursor = new Cursor();
     
+    taskmanager = new TaskManager();
+    workermanager = new WorkerManager(taskmanager, map);
+
     world_view = ui_view = window.getView();
 
     cursor_tile = 518;
@@ -12,11 +18,9 @@ GameScene::GameScene(sf::RenderWindow &window) : window(window) {
     window.setMouseCursorVisible(false);
     world_view.zoom(0.5);
     dragging = false;
-    selected = false;
-
-    entity_vec.push_back(new Player(sf::Vector2f(1, 1)));
 
     interface = new GameInterface();
+
 }
 
 void GameScene::handleEvent(sf::Event e) {
@@ -42,16 +46,18 @@ void GameScene::handleEvent(sf::Event e) {
             dragging = false;
             cursor_tile = 518;
         } else if(e.mouseButton.button == sf::Mouse::Left) {
-            select_pos = window.mapPixelToCoords(sf::Vector2i(e.mouseButton.x, e.mouseButton.y), world_view);
+            sf::Vector2f select_pos = window.mapPixelToCoords(sf::Vector2i(e.mouseButton.x, e.mouseButton.y), world_view);
             select_pos.x = ((int)select_pos.x / 16);
             select_pos.y = ((int)select_pos.y / 16);
             Object *o = map->getObject(select_pos.x, select_pos.y);
+            cursor->setObject(o);
             select_pos.x *= 16;
             select_pos.y *= 16;
+            cursor->setPosition(select_pos);
             if(o == nullptr) {
-                selected = false;
+                cursor->setSelected(false);
             } else {
-                selected = true;
+                cursor->setSelected(true);
             }
         }
     } else if(e.type == sf::Event::MouseWheelScrolled) {
@@ -76,31 +82,27 @@ void GameScene::handleEvent(sf::Event e) {
             cam_move.x = 0;
         }
     }
+    cursor->handleEvent(e, taskmanager);
 }
 
 void GameScene::update(float dt) {
-    for(int i = 0; i < entity_vec.size(); i++) {
-        entity_vec[i]->update(dt);
-    }
-
     world_view.move(sf::Vector2f((cam_move.x * 100) * dt, (cam_move.y * 100) * dt));
+    workermanager->update(dt);
 }
 
 void GameScene::render() {
     // World View
     window.setView(world_view);
     window.draw(*map);
+    workermanager->render(window, tileset);
+    taskmanager->drawTasks(window, tileset);
 
-    for(int i = 0; i < entity_vec.size(); i++) {
-        entity_vec[i]->draw(window, tileset);
-    }
+    cursor->drawCursor(window, tileset);
 
-    if(selected) {
-        tileset->drawSprite(window, select_pos, 614, sf::Color::Red);
-    }
 
     // UI view
     window.setView(ui_view);
     interface->draw(window, tileset);
+    cursor->drawButtons(window, tileset);
     tileset->drawSprite(window, cursor_pos, cursor_tile, sf::Color::White, 1.5);
 }

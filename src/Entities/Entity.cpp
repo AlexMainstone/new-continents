@@ -6,7 +6,10 @@ Entity::Entity(sf::Vector2f pos, int tile, sf::Color color) {
     this->color = color;
 }
 
-#include<iostream>
+bool Entity::isMoving() {
+    return move_queue.size() != 0;
+}
+
 void Entity::update(float dt) {
     // skip if no move
     if(move_queue.size() == 0) {
@@ -30,6 +33,10 @@ void Entity::update(float dt) {
         pos.y += move.y;
         move_queue.pop();
     }
+}
+
+void Entity::moveTo(int x, int y, Map *map) {
+    move_queue = Pathfinding::pathfind_astar(sf::Vector2i(x, y), sf::Vector2i(pos.x, pos.y), map);
 }
 
 void Entity::move(int x, int y) {

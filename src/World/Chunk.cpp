@@ -28,6 +28,10 @@ void Chunk::setTile(int x, int y, Tile *tile) {
     chunk_data[x][y] = tile;
 }
 
+Tile *Chunk::getTile(int x, int y) {
+    return chunk_data[x][y];
+}
+
 void Chunk::addObject(Object *obj) {
     object_list.push_back(obj);
 }
@@ -46,6 +50,6 @@ void Chunk::drawChunk(sf::RenderTarget &target, TileSet *tileset, sf::Vector2f p
     target.draw(sprite);
 
     for(auto o : object_list) {
-        tileset->drawSprite(target, sf::Vector2f(o->getPos().x * tileset->getTileSize() + pos.x, o->getPos().y * tileset->getTileSize() + pos.y), o->getTile()->tile, o->getTile()->color);
+        tileset->drawSprite(target, sf::Vector2f(o->getPos().x * tileset->getTileSize(), o->getPos().y * tileset->getTileSize()), o->getTile()->tile, o->getTile()->color);
     }
 }

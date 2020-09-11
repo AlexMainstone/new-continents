@@ -9,6 +9,8 @@ class IconButton {
 
         bool isPressed();
         bool isHovered();
+
+        sf::Vector2f setPosition(sf::Vector2f pos);
         
         bool handleEvent(sf::Event e);
 

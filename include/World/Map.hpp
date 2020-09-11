@@ -11,6 +11,7 @@ class Map : public sf::Drawable {
         Map(int width, int height, TileSet *tileset);
 
         void setTile(int x, int y, Tile *tile, bool update = true);
+        Tile *getTile(int x, int y);
         void updateChunks();
 
         virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;

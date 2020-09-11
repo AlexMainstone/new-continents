@@ -36,6 +36,11 @@ bool IconButton::handleEvent(sf::Event e) {
     return false;
 }
 
+sf::Vector2f IconButton::setPosition(sf::Vector2f pos) {
+    rect.left = pos.x;
+    rect.top = pos.y;
+}
+
 void IconButton::draw(sf::RenderTarget &target, TileSet *tileset) {
     sf::RectangleShape shape;
     shape.setPosition(rect.left, rect.top);

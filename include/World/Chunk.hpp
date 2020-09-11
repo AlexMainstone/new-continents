@@ -7,8 +7,8 @@
 #include "World/Tile.hpp"
 #include "Objects/Object.hpp"
 
-const int CHUNK_WIDTH = 32;
-const int CHUNK_HEIGHT = 32;
+const int CHUNK_WIDTH = 16;
+const int CHUNK_HEIGHT = 16;
 
 class Chunk {
     public:
@@ -16,6 +16,7 @@ class Chunk {
         void updateTexture(TileSet *tileset);
 
         void setTile(int x, int y, Tile *tile);
+        Tile *getTile(int x, int y);
 
         void drawChunk(sf::RenderTarget &target, TileSet *tileset, sf::Vector2f pos);
 

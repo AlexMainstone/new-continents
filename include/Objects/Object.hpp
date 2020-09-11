@@ -8,7 +8,9 @@ class Object {
         Tile *getTile();
         sf::Vector2i getPos();
         void setPos(int x, int y);
+
     private:
         Tile *tile;
         sf::Vector2i pos;
+
 };
