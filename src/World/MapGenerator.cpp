@@ -40,7 +40,6 @@ Map *MapGenerator::generate(TileSet *tileset, std::uint32_t seed) {
     return map;
 }
 
-#include <iostream>
 Map *MapGenerator::generate_from_py(TileSet *tileset) {
     Map *out_map = new Map(6, 6, tileset);
 
@@ -49,9 +48,14 @@ Map *MapGenerator::generate_from_py(TileSet *tileset) {
     char filename[] = "../res/scripts/generation/mapgen.py";
     FILE *fp;
     fp = _Py_fopen(filename, "r");
-    PyRun_SimpleFile(fp, filename);
 
+    // Get Main thread
     PyObject *main = PyImport_AddModule("__main__");
+
+    // Set world size
+    PyObject_SetAttrString(main, "MAP_SIZE", PyLong_FromLong(CHUNK_WIDTH*6));
+
+    PyRun_SimpleFile(fp, filename);
     PyObject *mapdata = PyObject_GetAttrString(main,"world_map");
 
     for(int x = 0; x < CHUNK_WIDTH*6; x++) {

@@ -26,4 +26,7 @@ class Map : public sf::Drawable {
 
         sf::Vector2f chunk_pixels;
         std::vector<std::vector<Chunk *>> map_data;
+
+        // DEBUG
+        bool *drawchunks;
 };

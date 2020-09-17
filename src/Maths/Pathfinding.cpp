@@ -18,9 +18,8 @@ std::vector<Coords> Pathfinding::calc_neighbors(Coords pos, Map *map) {
 
 std::queue<sf::Vector2i> Pathfinding::generate_path(std::map<Coords, Coords> cameFrom, Coords start,  Coords current) {
     std::queue<sf::Vector2i> out;
-    while(current.first != start.first && current.second != start.second) {
+    while(!(current.first == start.first && current.second == start.second)) {
         Coords from = cameFrom[current];
-        // out.push(sf::Vector2i(current.first - from.first, current.second - from.second));
         out.push(sf::Vector2i(from.first - current.first, from.second - current.second));
         current = from;
     }

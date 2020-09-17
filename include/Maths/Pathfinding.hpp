@@ -19,7 +19,8 @@ inline float calc_heuristic(Coords p1, Coords p2) {
 
 class Pathfinding {
     public:
+        static std::queue<sf::Vector2i> pathfind_astar(sf::Vector2i s, sf::Vector2i e, Map *map);
+    private:
         static std::vector<Coords> calc_neighbors(Coords pos, Map *map);
         static std::queue<sf::Vector2i> generate_path(std::map<Coords, Coords> cameFrom, Coords start,  Coords current);
-        static std::queue<sf::Vector2i> pathfind_astar(sf::Vector2i s, sf::Vector2i e, Map *map);
 };

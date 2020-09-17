@@ -48,12 +48,16 @@ set(SOURCES
     src/Managers/WorkerManager.cpp
     )
 
-find_package(SFML 2.5 REQUIRED audio graphics window system)
 
 add_executable(base-builder ${SOURCES})
+
 target_include_directories(base-builder PRIVATE ${CMAKE_SOURCE_DIR}/include /usr/include/python3.8/)
 link_directories(/usr/lib/python3.8)
 
-target_link_libraries(base-builder 
+find_package(SFML 2.5 REQUIRED audio graphics window system)
+find_package(ImGui-SFML REQUIRED)
+
+target_link_libraries(base-builder
     python3.8 crypt pthread dl util m
+    ImGui-SFML::ImGui-SFML
     sfml-audio sfml-graphics sfml-window sfml-system)
